@@ -4,5 +4,11 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-def index(request):
-	return HttpResponse("Rango says hey there partner!")
+def index(request): 
+	html= "<h1>Rango says hey there parter</h1>" + '<br/><a href="/rango/about/">About</a>'
+	return HttpResponse(html)
+
+def about(request):
+
+	abouthtml= "<h2>You are on the about page</h2>" + '<br/><a href="/rango/">Home</a>'
+	return HttpResponse(abouthtml)
