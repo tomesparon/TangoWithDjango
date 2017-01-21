@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.template.defaultfilters import slugify
 # Create your models here.
 # . Both must inherit from the Model base class, django.db.models.Model .
 class Category(models.Model):
@@ -9,7 +9,12 @@ class Category(models.Model):
 	# Exercise add in attributes as integerfields for views and likes
 	views = models.IntegerField(default=0)
 	likes = models.IntegerField(default=0)
+	#Ch6.3 add slug to clean my urls, and set to blank true
+	slug = models.SlugField(blank=True)
 
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(Category, self).save(*args, **kwargs)
 
 	class Meta:
 		verbose_name_plural = 'Categories'
