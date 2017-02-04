@@ -6,6 +6,8 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 
 	url(r'^about/', views.about, name='About'),
+	#Map the add category view
+	url(r'^add_category/$', views.add_category, name='add_category'),
 
 	#Add parameterised url mapping for category
 	# will invoke view.show_category() when the URL pattern below is matched:
