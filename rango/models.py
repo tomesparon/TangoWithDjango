@@ -4,6 +4,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 # Create your models here.
 # . Both must inherit from the Model base class, django.db.models.Model .
+# 
+# PLEASE ADD A MAX_LEGTH PARAMETER VIA AN ATTRIBUTE TO STORE IT
 class Category(models.Model):
 	name = models.CharField(max_length=128, unique=True)
 	# Exercise add in attributes as integerfields for views and likes
