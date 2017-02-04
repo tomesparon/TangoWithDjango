@@ -27,7 +27,10 @@ def index(request):
 		# that will be passed to the template engine.
 	#
 	category_list = Category.objects.order_by('-likes')[:5]
-	context_dict = {'categories': category_list}
+	#added top viewed pages to index using Page model - p76
+	page_list = Page.objects.order_by('-views')[:5]
+
+	context_dict = {'categories': category_list, 'pages': page_list}
 
 	# Render the response and send it back!
 	return render(request, 'rango/index.html', context_dict)

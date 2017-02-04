@@ -7,6 +7,8 @@ django.setup()
 from rango.models import Category, Page
 
 def populate():
+
+
     # added views
     python_pages = [
 		{"title": "Official Python Tutorial", "url":"http://docs.python.org/2/tutorial/", "views": 100},
@@ -24,11 +26,15 @@ def populate():
     other_pages = [
 		{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/", "views": 10},
 		{ "title":"Flask", "url":"http://flask.pocoo.org", "views": 22} ]
+
+    my_githubs = [
+		{ "title":"TangoWithDjango", "url":"https://github.com/tomesparon/TangoWithDjango", "views": 3000},
+		{ "title":"TopTrumps", "url":"https://github.com/AukseBar/TopTrumps", "views": 2000} ]
     
     cats = {"Python": {"pages": python_pages, "views": 128, "likes": 64},
 			"Django": {"pages": django_pages, "views": 64, "likes": 32},
         	"Other Frameworks": {"pages": other_pages, "views": 32, "likes": 16},
-
+        	"My Github projects": {"pages": my_githubs, "views": 1280, "likes": 640},
 
             }
     
@@ -41,7 +47,7 @@ def populate():
 	# for more information about using items() and how to iterate over a dictionary properly
     
     # Using the .items returns the key and the value. In this case the key is "Python", "Django" or "Other Frameworks" and the value (cat_data) is the corresponding dictionary in cats.
-    for cat, cat_data in cats.items():
+    for cat, cat_data in cats.iteritems():
         # c = add_cat(cat)
         # Updated the population script to pass through the specific values for views and likes
         c = add_cat(cat, cat_data["views"], cat_data["likes"])
