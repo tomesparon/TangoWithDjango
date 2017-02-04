@@ -16,6 +16,10 @@ Run:
 
 ``python manage.py runserver``
 
+Be sure to run the populate script:
+
+``python populate_rango.py``
+
 ## Built With
 * [Django](https://docs.djangoproject.com/en/1.10/) - The web framework used
 
