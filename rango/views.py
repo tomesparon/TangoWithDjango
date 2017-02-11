@@ -18,8 +18,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 #Logout
 from django.contrib.auth import logout
+#Cookies
+from datetime import datetime
 
 def index(request): 
+    request.session.set_test_cookie()
     #OLDER########
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -39,17 +42,22 @@ def index(request):
         # that will be passed to the template engine.
     #
     #CHANGED 5 TO 15
-    category_list = Category.objects.order_by('-likes')[:15]
-    #added top viewed pages to index using Page model - p76
+    category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]
-
     context_dict = {'categories': category_list, 'pages': page_list}
-
-    # Render the response and send it back!
-    return render(request, 'rango/index.html', context_dict)
+    
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    
+    response = render(request, 'rango/index.html', context_dict)
+    return response
+  
     
 
 def about(request):
+    if request.session.test_cookie_worked():
+        print("TEST COOKIE WORKED!")
+        request.session.delete_test_cookie()
 
     context_dict = {'boldmessagecat': "me_irl"}
 
@@ -58,6 +66,29 @@ def about(request):
     # Note that the first parameter is the template we wish to use.
     return render(request, 'rango/about.html', context=context_dict)
 
+
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.sessions.get(cookie)
+    if not val:
+        val = default_val
+    return val  
+    
+    
+    
+def visitor_cookie_handler(request):
+    visits = int(request.COOKIES.get('visits', '1'))
+    
+    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
+    
+    if (datetime.now() - last_visit_time).days > 0:
+        visits = visits + 1
+        request.session['last_visit'] = str(datetime.now())
+    else:
+        visits = 1
+        request.session['last_visit'] = last_visit_cookie
+    request.session['visits'] = visits
 
 
     #old without template
