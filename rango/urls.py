@@ -5,7 +5,7 @@ urlpatterns = [
 	#REMEMBER TO PUT COMMAS IN AFTER EACH!!!!
 	url(r'^$', views.index, name='index'),
 
-	url(r'^about/', views.about, name='About'),
+	url(r'^about/', views.about, name='about'),
 	#Map the add category view
 	url(r'^add_category/$', views.add_category, name='add_category'),
 
